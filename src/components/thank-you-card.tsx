@@ -73,7 +73,7 @@ export function ThankYouCard({
           height={140}
           className="opacity-80"
         />
-        <span className="rounded-pill border border-terracotta/60 px-7 py-3 font-sans text-[13px] font-medium tracking-[3px] text-ink">
+        <span className="rounded-pill border border-terracotta/60 px-7 py-3 font-serif text-[26px] font-medium tracking-[3px] text-ink">
           {monogram(coupleNames)}
         </span>
       </header>
@@ -153,7 +153,7 @@ export function ThankYouCard({
 
       {/* Romantic signoff */}
       <footer className="flex flex-col items-center gap-6 px-4 text-center">
-        <p className="font-thin-serif text-[14px] uppercase tracking-[3px] text-sage">
+        <p className="font-thin-serif text-[14px] uppercase tracking-[3px]">
           With love,
         </p>
         <p className="text-display text-[52px] text-terracotta sm:text-[64px]">

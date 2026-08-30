@@ -22,7 +22,7 @@ export function DateMark({ date, className }: { date: string; className?: string
       <span aria-hidden className="font-tenor absolute -top-0.5 left-[55%] text-[26px] tracking-[2px] text-terracotta">
         {day}
       </span>
-      <span aria-hidden className="font-script block text-[68px] leading-none text-light-gray">
+      <span aria-hidden className="font-script block text-[68px] leading-none text-sage">
         {month}
       </span>
       <span aria-hidden className="font-tenor absolute -bottom-0.5 right-[55%] text-[26px] tracking-[2px] text-terracotta">
