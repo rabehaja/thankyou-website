@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Warm Botanical palette */
+  --color-cream-bg: #fcfaf6;
+  --color-cream-card: #fbf8f2;
+  --color-terracotta: #bd6e55;
+  --color-sage: #8ea485;
+  --color-ink: #2d2c2a;
+  --color-border-neutral: #e5e1da;
+  --color-muted: #6f6f6f;
+  --color-light-gray: #c5c5c5;
+  --color-near-black: #030303;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Derived tints used across the design system */
+  --color-terracotta-soft: #f2e2dc;
+  --color-terracotta-hover: #a95f48;
+  --color-sage-soft: #e9efe6;
+  --color-gold: #b08a3e;
+  --color-gold-soft: #f6ecd9;
+  --color-danger: #c94f43;
+  --color-danger-soft: #f7e3e0;
+  --color-info: #4a708c;
+  --color-info-soft: #e4ecf2;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Typography */
+  --font-script: var(--font-parisienne);
+  --font-sans: var(--font-outfit);
+
+  /* Corner radii */
+  --radius-input: 6px;
+  --radius-card: 12px;
+  --radius-frame: 20px;
+  --radius-pill: 100px;
+
+  /* Elevation */
+  --shadow-card: 0 8px 40px rgb(45 44 42 / 0.08);
+  --shadow-letter: 0 6px 32px rgb(45 44 42 / 0.1);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* Compound type styles from the Figma typography scale */
+@utility text-display {
+  font-family: var(--font-script), cursive;
+  font-weight: 400;
+  font-size: 4rem; /* 64px */
+  line-height: 1.15;
+}
+
+@utility text-h1 {
+  font-family: var(--font-script), cursive;
+  font-weight: 400;
+  font-size: 2.75rem; /* 44px */
+  line-height: 1.2;
+}
+
+@utility text-h2 {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem; /* 18px */
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+@utility text-body-lg {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.5;
+}
+
+@utility text-body {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.8;
+}
+
+@utility text-caption {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 500;
+  font-size: 1rem; /* 16px */
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+@utility text-small {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem; /* 15px */
+  letter-spacing: 1.5px;
+}
+
+@utility text-ui-label {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem; /* 14px */
+  letter-spacing: 4px;
+  text-transform: uppercase;
 }
