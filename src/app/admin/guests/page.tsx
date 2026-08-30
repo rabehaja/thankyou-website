@@ -46,9 +46,7 @@ async function getGuests(
       .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
     if (query) {
       const escaped = query.replaceAll("%", "\\%").replaceAll("_", "\\_");
-      request = request.or(
-        `full_name.ilike.%${escaped}%,table_assignment.ilike.%${escaped}%`,
-      );
+      request = request.ilike("full_name", `%${escaped}%`);
     }
     const { data, count, error } = await request;
     if (error) return null;
@@ -80,7 +78,7 @@ export default async function GuestsPage({
         <div>
           <h1 className="text-h1 text-[36px] text-ink">Guest List</h1>
           <p className="mt-1 text-[15px] text-muted">
-            Manage guests, table assignments, and RSVP records.
+            Manage guests and RSVP records.
           </p>
         </div>
         <Link
@@ -95,7 +93,7 @@ export default async function GuestsPage({
         <SearchInput
           name="q"
           defaultValue={query}
-          placeholder="Search gifts, guests, tables..."
+          placeholder="Search guests..."
           aria-label="Search guests"
         />
       </form>
@@ -129,7 +127,6 @@ export default async function GuestsPage({
           <Table>
             <TableHead>
               <TableHeaderCell>Guest</TableHeaderCell>
-              <TableHeaderCell>Table</TableHeaderCell>
               <TableHeaderCell>Status</TableHeaderCell>
               <TableHeaderCell className="text-right">Actions</TableHeaderCell>
             </TableHead>
@@ -143,9 +140,6 @@ export default async function GuestsPage({
                         {guest.tags.join(" · ")}
                       </div>
                     ) : null}
-                  </TableCell>
-                  <TableCell className="text-muted">
-                    {guest.table_assignment ?? "—"}
                   </TableCell>
                   <TableCell>
                     <Badge variant={statusVariant[guest.status]}>

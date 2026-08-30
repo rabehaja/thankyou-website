@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CardComposer } from "@/components/admin/card-composer";
-import { cardUrl, getSettings } from "@/lib/data";
+import { cardUrl, getSettings, publicPhotoUrl } from "@/lib/data";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { formatCeremonialDate } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Compose Card" };
 
@@ -12,13 +11,19 @@ export default async function CardDetailPage({
 }: PageProps<"/admin/cards/[id]">) {
   const { id } = await params;
   const supabase = createAdminClient();
-  const [{ data: card }, settings] = await Promise.all([
+  const [{ data: card }, settings, { data: firstPhoto }] = await Promise.all([
     supabase
       .from("thank_you_cards")
       .select("*, guests(full_name)")
       .eq("id", id)
       .maybeSingle(),
     getSettings(),
+    supabase
+      .from("gallery_photos")
+      .select("storage_path")
+      .order("sort_order")
+      .limit(1)
+      .maybeSingle(),
   ]);
   if (!card) notFound();
 
@@ -36,11 +41,11 @@ export default async function CardDetailPage({
       guestName={guestName}
       preview={{
         coupleNames: settings.couple_names,
-        ceremonialDate: settings.wedding_date
-          ? formatCeremonialDate(settings.wedding_date)
-          : null,
+        weddingDate: settings.wedding_date,
         venue: settings.venue,
         photoUrl: settings.couple_photo_url,
+        featuredPhotoUrl: firstPhoto ? publicPhotoUrl(firstPhoto.storage_path) : null,
+        galleryHref: settings.gallery_url ?? "/gallery",
       }}
     />
   );

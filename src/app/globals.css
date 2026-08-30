@@ -23,9 +23,12 @@
   --color-info: #4a708c;
   --color-info-soft: #e4ecf2;
 
-  /* Typography */
-  --font-script: var(--font-parisienne);
-  --font-sans: var(--font-outfit);
+  /* Typography — same families as the wedding website */
+  --font-script: var(--font-abramo);
+  --font-sans: var(--font-montserrat);
+  --font-serif: var(--font-playfair);
+  --font-thin-serif: var(--font-london);
+  --font-tenor: var(--font-tenorsans);
 
   /* Corner radii */
   --radius-input: 6px;
@@ -60,7 +63,7 @@ body {
 }
 
 @utility text-h2 {
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-thin-serif), serif;
   font-weight: 500;
   font-size: 1.125rem; /* 18px */
   letter-spacing: 3px;
@@ -82,7 +85,7 @@ body {
 }
 
 @utility text-caption {
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-thin-serif), serif;
   font-weight: 500;
   font-size: 1rem; /* 16px */
   letter-spacing: 3px;
@@ -90,14 +93,14 @@ body {
 }
 
 @utility text-small {
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-thin-serif), serif;
   font-weight: 400;
   font-size: 0.9375rem; /* 15px */
   letter-spacing: 1.5px;
 }
 
 @utility text-ui-label {
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-thin-serif), serif;
   font-weight: 500;
   font-size: 0.875rem; /* 14px */
   letter-spacing: 4px;

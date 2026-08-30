@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ThankYouCard } from "@/components/thank-you-card";
 import { createPublicClient } from "@/lib/supabase/server";
-import { getSettings } from "@/lib/data";
-import { formatCeremonialDate } from "@/lib/utils";
+import { getSettings, publicPhotoUrl } from "@/lib/data";
 import type { LiveCard } from "@/lib/database.types";
 
 export const dynamic = "force-dynamic";
@@ -20,24 +19,43 @@ async function getLiveCard(slug: string): Promise<LiveCard | null> {
   }
 }
 
+async function getFeaturedPhotoUrl(): Promise<string | null> {
+  try {
+    const supabase = createPublicClient();
+    const { data } = await supabase
+      .from("gallery_photos")
+      .select("storage_path")
+      .order("sort_order")
+      .limit(1)
+      .maybeSingle();
+    return data ? publicPhotoUrl(data.storage_path) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default async function GuestCardPage({
   params,
 }: PageProps<"/t/[slug]">) {
   const { slug } = await params;
-  const [card, settings] = await Promise.all([getLiveCard(slug), getSettings()]);
+  const [card, settings, featuredPhotoUrl] = await Promise.all([
+    getLiveCard(slug),
+    getSettings(),
+    getFeaturedPhotoUrl(),
+  ]);
   if (!card) notFound();
 
   return (
-    <main className="flex flex-col items-center px-4 pt-16 sm:pt-24">
+    <main className="w-full">
       <ThankYouCard
         coupleNames={settings.couple_names}
+        guestName={card.guest_name}
         message={card.greeting_message}
-        ceremonialDate={
-          settings.wedding_date ? formatCeremonialDate(settings.wedding_date) : null
-        }
+        weddingDate={settings.wedding_date}
         venue={settings.venue}
         photoUrl={settings.couple_photo_url}
-        cta={{ href: "/gallery", label: "View Photography" }}
+        featuredPhotoUrl={featuredPhotoUrl}
+        galleryHref={settings.gallery_url ?? "/gallery"}
       />
     </main>
   );

@@ -1,8 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
+import { DateMark } from "@/components/date-mark";
 import { LeafIcon } from "@/components/ui/icons";
 import { getSettings } from "@/lib/data";
-import { formatCeremonialDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -25,9 +24,9 @@ export default async function LandingPage() {
       </h1>
 
       {settings.wedding_date ? (
-        <p className="mt-6 text-h2 text-[13px] text-ink/80 sm:text-[15px]">
-          {formatCeremonialDate(settings.wedding_date)}
-        </p>
+        <div className="mt-6">
+          <DateMark date={settings.wedding_date} />
+        </div>
       ) : null}
       {settings.venue ? (
         <p className="mt-3 text-small text-muted">{settings.venue}</p>
@@ -52,12 +51,14 @@ export default async function LandingPage() {
         {settings.thank_you_message ?? DEFAULT_MESSAGE}
       </p>
 
-      <Link
-        href="/gallery"
-        className="mt-12 inline-flex items-center justify-center rounded-pill bg-terracotta px-9 py-3.5 text-ui-label text-[12px] text-white transition-colors hover:bg-terracotta-hover"
+      <a
+        href={settings.gallery_url ?? "/gallery"}
+        target={settings.gallery_url ? "_blank" : undefined}
+        rel={settings.gallery_url ? "noreferrer" : undefined}
+        className="mt-12 inline-flex items-center justify-center rounded-pill bg-terracotta px-9 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[4px] text-near-black transition-colors hover:bg-terracotta-hover"
       >
         View Gallery
-      </Link>
+      </a>
     </main>
   );
 }

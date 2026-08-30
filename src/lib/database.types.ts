@@ -8,6 +8,7 @@ export type Settings = {
   venue: string | null;
   thank_you_message: string | null;
   couple_photo_url: string | null;
+  gallery_url: string | null;
   rsvp_active: boolean;
   updated_at: string;
 }

@@ -16,7 +16,7 @@ export default function CardNotFound() {
         </p>
         <Link
           href="/"
-          className="mt-8 inline-flex items-center justify-center rounded-pill border border-terracotta px-7 py-2.5 text-ui-label text-[12px] text-terracotta transition-colors hover:bg-terracotta-soft/60"
+          className="mt-8 inline-flex items-center justify-center rounded-pill border border-terracotta px-7 py-2.5 font-sans text-[12px] font-semibold uppercase tracking-[4px] text-near-black transition-colors hover:bg-terracotta-soft/60"
         >
           Visit Our Thank You Page
         </Link>

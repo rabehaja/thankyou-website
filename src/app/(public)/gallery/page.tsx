@@ -54,7 +54,7 @@ export default async function GalleryPage() {
 
       <Link
         href="/"
-        className="mt-16 inline-flex items-center justify-center rounded-pill border border-terracotta px-8 py-3 text-ui-label text-[12px] text-terracotta transition-colors hover:bg-terracotta-soft/60"
+        className="mt-16 inline-flex items-center justify-center rounded-pill border border-terracotta px-8 py-3 font-sans text-[12px] font-semibold uppercase tracking-[4px] text-near-black transition-colors hover:bg-terracotta-soft/60"
       >
         Back to Thank You
       </Link>

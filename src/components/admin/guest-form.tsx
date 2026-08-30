@@ -10,19 +10,6 @@ import { Toggle } from "@/components/ui/toggle";
 import type { Guest } from "@/lib/database.types";
 import type { GuestFormState } from "@/lib/actions/guests";
 
-const TABLE_OPTIONS = [
-  "Table 1",
-  "Table 2",
-  "Table 3",
-  "Table 4 (Bridal Party)",
-  "Table 4",
-  "Table 5",
-  "Table 6",
-  "Table 7",
-  "Table 8",
-  "Table 9",
-];
-
 const initialState: GuestFormState = { error: null };
 
 export function GuestForm({
@@ -44,12 +31,6 @@ export function GuestForm({
     setTags((current) => [...current, value]);
     setTagDraft("");
   };
-
-  const tableOptions = TABLE_OPTIONS.includes(guest?.table_assignment ?? "")
-    ? TABLE_OPTIONS
-    : guest?.table_assignment
-      ? [guest.table_assignment, ...TABLE_OPTIONS]
-      : TABLE_OPTIONS;
 
   return (
     <form action={formAction} className="flex max-w-xl flex-col gap-5">
@@ -77,21 +58,6 @@ export function GuestForm({
           defaultValue={guest?.email ?? ""}
           placeholder="guest@example.com"
         />
-      </Field>
-
-      <Field label="Table Assignment" htmlFor="table_assignment">
-        <Select
-          id="table_assignment"
-          name="table_assignment"
-          defaultValue={guest?.table_assignment ?? ""}
-        >
-          <option value="">No table assigned</option>
-          {tableOptions.map((table) => (
-            <option key={table} value={table}>
-              {table}
-            </option>
-          ))}
-        </Select>
       </Field>
 
       <Field

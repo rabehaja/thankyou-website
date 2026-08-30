@@ -14,10 +14,6 @@ const guestSchema = z.object({
     .email("Please enter a valid email address.")
     .or(z.literal(""))
     .transform((value) => value || null),
-  table_assignment: z
-    .string()
-    .trim()
-    .transform((value) => value || null),
   tags: z.array(z.string().trim().min(1)).max(12),
   rsvp_received: z.boolean(),
   status: z.enum(["active", "pending", "archived"]),
@@ -38,7 +34,6 @@ function parseGuestForm(formData: FormData) {
   return guestSchema.safeParse({
     full_name: formData.get("full_name") ?? "",
     email: formData.get("email") ?? "",
-    table_assignment: formData.get("table_assignment") ?? "",
     tags,
     rsvp_received: formData.get("rsvp_received") === "on",
     status: formData.get("status") ?? "active",

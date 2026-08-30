@@ -41,9 +41,11 @@ interface ComposerCard {
 
 interface PreviewSettings {
   coupleNames: string;
-  ceremonialDate: string | null;
+  weddingDate: string | null;
   venue: string | null;
   photoUrl: string | null;
+  featuredPhotoUrl: string | null;
+  galleryHref: string;
 }
 
 export function CardComposer({
@@ -160,14 +162,14 @@ export function CardComposer({
           <Field
             label="Personal Greeting Message"
             htmlFor="greeting"
-            helper="This custom text will be overlaid onto the digital thank you landing card."
+            helper={`The "Dear ${guestName.split(" ")[0]}," salutation is added automatically — just write the message itself.`}
           >
             <Textarea
               id="greeting"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               rows={8}
-              placeholder={`Dear ${guestName.split(" ")[0]}, thank you for…`}
+              placeholder="Thank you for celebrating with us…"
             />
           </Field>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -200,16 +202,20 @@ export function CardComposer({
 
         <div className="flex flex-col items-center gap-3">
           <p className="text-xs font-medium uppercase tracking-[2.5px] text-muted">
-            Thank You Card Preview
+            Thank You Page Preview
           </p>
-          <ThankYouCard
-            coupleNames={preview.coupleNames}
-            message={message || "Your personal greeting will appear here…"}
-            ceremonialDate={preview.ceremonialDate}
-            venue={preview.venue}
-            photoUrl={preview.photoUrl}
-            cta={{ href: "/gallery", label: "View Photography" }}
-          />
+          <div className="max-h-[75vh] w-full overflow-y-auto rounded-card border border-border-neutral bg-cream-bg">
+            <ThankYouCard
+              coupleNames={preview.coupleNames}
+              guestName={guestName}
+              message={message || "Your personal greeting will appear here…"}
+              weddingDate={preview.weddingDate}
+              venue={preview.venue}
+              photoUrl={preview.photoUrl}
+              featuredPhotoUrl={preview.featuredPhotoUrl}
+              galleryHref={preview.galleryHref}
+            />
+          </div>
         </div>
       </div>
 

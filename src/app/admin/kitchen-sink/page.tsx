@@ -60,7 +60,7 @@ export default function KitchenSinkPage() {
             <option value="table4">Table 4 (Bridal Party)</option>
             <option value="table2">Table 2</option>
           </Select>
-          <SearchInput placeholder="Search gifts, guests, tables..." />
+          <SearchInput placeholder="Search guests..." />
         </div>
       </Section>
 
@@ -110,14 +110,12 @@ export default function KitchenSinkPage() {
         <Table>
           <TableHead>
             <TableHeaderCell>Guest</TableHeaderCell>
-            <TableHeaderCell>Table</TableHeaderCell>
             <TableHeaderCell>Status</TableHeaderCell>
             <TableHeaderCell className="text-right">Actions</TableHeaderCell>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell className="font-medium">Michael &amp; Sarah Jenkins</TableCell>
-              <TableCell className="text-muted">Table 8</TableCell>
               <TableCell><Badge variant="active">Active</Badge></TableCell>
               <TableCell className="text-right">
                 <span className="text-[14px] font-medium text-terracotta">Edit</span>
@@ -125,7 +123,6 @@ export default function KitchenSinkPage() {
             </TableRow>
             <TableRow selected>
               <TableCell className="font-medium">Emily Watson (Selected)</TableCell>
-              <TableCell className="text-muted">Table 2</TableCell>
               <TableCell><Badge variant="active">Active</Badge></TableCell>
               <TableCell className="text-right">
                 <span className="text-[14px] font-medium text-danger">Delete</span>

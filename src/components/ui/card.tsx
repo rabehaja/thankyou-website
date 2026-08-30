@@ -21,7 +21,7 @@ export function StatCard({ label, value, detail, className }: StatCardProps) {
     <Card className={cn("p-6", className)}>
       <p className="text-xs font-medium uppercase tracking-[2.5px] text-muted">{label}</p>
       <div className="mt-2 flex items-baseline gap-3">
-        <span className="text-4xl font-medium text-ink">{value}</span>
+        <span className="font-serif text-4xl font-medium text-ink">{value}</span>
         {detail ? <span className="text-sm text-sage">{detail}</span> : null}
       </div>
     </Card>

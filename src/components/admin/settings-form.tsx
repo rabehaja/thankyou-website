@@ -64,6 +64,20 @@ export function SettingsForm({ settings }: { settings: Settings }) {
         />
       </Field>
 
+      <Field
+        label="Gallery Link"
+        htmlFor="gallery_url"
+        helper="External photo gallery (e.g. a Google Drive folder). Used by the 'View Gallery' buttons; leave empty to use the built-in gallery page."
+      >
+        <Input
+          id="gallery_url"
+          name="gallery_url"
+          type="url"
+          defaultValue={settings.gallery_url ?? ""}
+          placeholder="https://drive.google.com/…"
+        />
+      </Field>
+
       <Toggle
         name="rsvp_active"
         defaultChecked={settings.rsvp_active}

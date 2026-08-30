@@ -11,6 +11,7 @@ export const FALLBACK_SETTINGS: Settings = {
   venue: null,
   thank_you_message: null,
   couple_photo_url: null,
+  gallery_url: null,
   rsvp_active: true,
   updated_at: new Date(0).toISOString(),
 };
