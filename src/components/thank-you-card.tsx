@@ -7,6 +7,7 @@ import { PineIcon, SparklesIcon } from "@/components/ui/icons";
 export interface ThankYouCardProps {
   coupleNames: string;
   guestName: string;
+  companions?: string[];
   message: string;
   weddingDate?: string | null;
   venue?: string | null;
@@ -23,6 +24,17 @@ function monogram(coupleNames: string): string {
     .map((part) => part.trim()[0]?.toUpperCase())
     .filter(Boolean);
   return initials.length >= 2 ? initials.join(" & ") : (initials[0] ?? "•");
+}
+
+/** "Dear Verena & Ruben," — first names of the whole party. */
+export function buildSalutation(guestName: string, companions: string[] = []): string {
+  const firstNames = [guestName, ...companions]
+    .map((name) => name.trim().split(/\s+/)[0])
+    .filter(Boolean);
+  if (firstNames.length === 0) return "Dear friend,";
+  if (firstNames.length === 1) return `Dear ${firstNames[0]},`;
+  const last = firstNames[firstNames.length - 1];
+  return `Dear ${firstNames.slice(0, -1).join(", ")} & ${last},`;
 }
 
 /** Avoid a doubled salutation when the message already starts with "Dear …," */
@@ -50,6 +62,7 @@ function FleuronDivider() {
 export function ThankYouCard({
   coupleNames,
   guestName,
+  companions,
   message,
   weddingDate,
   venue,
@@ -58,7 +71,7 @@ export function ThankYouCard({
   galleryHref,
   className,
 }: ThankYouCardProps) {
-  const firstName = guestName.trim().split(/\s+/)[0] ?? "friend";
+  const salutation = buildSalutation(guestName, companions);
   const body = stripSalutation(message);
   const externalGallery = galleryHref.startsWith("http");
 
@@ -108,7 +121,7 @@ export function ThankYouCard({
         <div className="relative mx-auto w-full max-w-2xl rounded-frame bg-white px-8 py-14 shadow-letter sm:px-16">
           <PineIcon size={24} className="absolute right-6 top-6 text-sage opacity-40" />
           <h1 className="text-h1 text-[34px] text-terracotta sm:text-[40px]">
-            Dear {firstName},
+            {salutation}
           </h1>
           <p className="mt-8 whitespace-pre-line text-[16px] leading-[1.8] text-ink/85">
             {body}

@@ -56,9 +56,9 @@ export default function KitchenSinkPage() {
           </Field>
           <Input disabled placeholder="Locked database field" />
           <Textarea defaultValue="We are so incredibly grateful for the gorgeous ceramic vase you gifted us. It looks beautiful in our living room and will be cherished for years to come!" />
-          <Select defaultValue="table4">
-            <option value="table4">Table 4 (Bridal Party)</option>
-            <option value="table2">Table 2</option>
+          <Select defaultValue="shower">
+            <option value="shower">Bridal Shower</option>
+            <option value="college">College Friends</option>
           </Select>
           <SearchInput placeholder="Search guests..." />
         </div>
@@ -69,15 +69,15 @@ export default function KitchenSinkPage() {
           <Checkbox label="Digital Card Sent Successfully" defaultChecked />
           <Radio name="ks-radio" label="Primary Attendant (Option Selected)" defaultChecked />
           <div className="flex gap-6">
-            <Toggle label="RSVP Active" defaultChecked />
-            <Toggle label="RSVP Disabled" />
+            <Toggle label="Toggle On" defaultChecked />
+            <Toggle label="Toggle Off" />
           </div>
         </div>
       </Section>
 
       <Section title="Cards">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <StatCard label="Total RSVP Received" value={184} detail="92% of Guests" />
+          <StatCard label="Letters Opened" value={132} detail="78% of live cards" />
           <FormCard
             heading="Card Heading Element"
             description="Include key configuration parameters and controls inside this standard structured container."

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { OpenTracker } from "@/components/open-tracker";
 import { ThankYouCard } from "@/components/thank-you-card";
 import { createPublicClient } from "@/lib/supabase/server";
 import { getSettings, publicPhotoUrl } from "@/lib/data";
@@ -47,9 +48,11 @@ export default async function GuestCardPage({
 
   return (
     <main className="w-full">
+      <OpenTracker slug={slug} />
       <ThankYouCard
         coupleNames={settings.couple_names}
         guestName={card.guest_name}
+        companions={card.companions}
         message={card.greeting_message}
         weddingDate={settings.wedding_date}
         venue={settings.venue}

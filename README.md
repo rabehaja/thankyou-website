@@ -11,8 +11,8 @@ couple. Built with Next.js (App Router, TypeScript, Tailwind v4) and Supabase
   (`/gallery`), and personalized per-guest thank-you cards at unique links
   (`/t/<slug>`). Only published cards are visible.
 - **Backoffice** (`/admin`): dashboard stats, guest list (search, pagination,
-  tags, table assignments, RSVP), thank-you card composer with live preview and
-  publish/copy-link flow, and site settings with photo uploads.
+  tags), thank-you card composer with live preview, publish/copy-link flow,
+  letter-open analytics, and site settings with photo uploads.
 
 ## Setup
 

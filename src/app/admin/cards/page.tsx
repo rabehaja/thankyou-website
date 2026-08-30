@@ -118,6 +118,7 @@ export default async function CardsPage() {
               <TableHead>
                 <TableHeaderCell>Guest</TableHeaderCell>
                 <TableHeaderCell>Status</TableHeaderCell>
+                <TableHeaderCell>Opens</TableHeaderCell>
                 <TableHeaderCell>Last Updated</TableHeaderCell>
                 <TableHeaderCell className="text-right">Actions</TableHeaderCell>
               </TableHead>
@@ -131,6 +132,20 @@ export default async function CardsPage() {
                       <Badge variant={statusVariant[card.status]}>
                         {statusLabel[card.status]}
                       </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {card.open_count > 0 ? (
+                        <>
+                          <span className="font-medium">{card.open_count}</span>
+                          {card.last_opened_at ? (
+                            <div className="mt-0.5 text-[13px] text-muted">
+                              last {formatDate(card.last_opened_at)}
+                            </div>
+                          ) : null}
+                        </>
+                      ) : (
+                        <span className="text-muted">—</span>
+                      )}
                     </TableCell>
                     <TableCell className="text-muted">
                       {formatDate(card.updated_at)}

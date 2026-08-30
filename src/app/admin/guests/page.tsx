@@ -78,7 +78,7 @@ export default async function GuestsPage({
         <div>
           <h1 className="text-h1 text-[36px] text-ink">Guest List</h1>
           <p className="mt-1 text-[15px] text-muted">
-            Manage guests and RSVP records.
+            Manage your guest list.
           </p>
         </div>
         <Link
@@ -134,10 +134,26 @@ export default async function GuestsPage({
               {result.guests.map((guest) => (
                 <TableRow key={guest.id}>
                   <TableCell>
-                    <div className="font-medium">{guest.full_name}</div>
-                    {guest.tags.length > 0 ? (
+                    <div className="font-medium">
+                      {guest.full_name}
+                      {guest.companions.length > 0 ? (
+                        <span className="ml-2 text-[13px] font-normal text-muted">
+                          +{guest.companions.length}
+                        </span>
+                      ) : null}
+                    </div>
+                    {guest.companions.length > 0 || guest.tags.length > 0 ? (
                       <div className="mt-1 text-[13px] text-muted">
-                        {guest.tags.join(" · ")}
+                        {[
+                          guest.companions.length > 0
+                            ? `with ${guest.companions
+                                .map((name) => name.trim().split(/\s+/)[0])
+                                .join(", ")}`
+                            : null,
+                          ...guest.tags,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")}
                       </div>
                     ) : null}
                   </TableCell>

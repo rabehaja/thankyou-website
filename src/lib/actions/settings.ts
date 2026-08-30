@@ -32,7 +32,6 @@ const settingsSchema = z.object({
     .url("The gallery link must be a full URL (https://…).")
     .or(z.literal(""))
     .transform((value) => value || null),
-  rsvp_active: z.boolean(),
 });
 
 export async function updateSettings(
@@ -46,7 +45,6 @@ export async function updateSettings(
     venue: formData.get("venue") ?? "",
     thank_you_message: formData.get("thank_you_message") ?? "",
     gallery_url: formData.get("gallery_url") ?? "",
-    rsvp_active: formData.get("rsvp_active") === "on",
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Invalid settings.", saved: false };

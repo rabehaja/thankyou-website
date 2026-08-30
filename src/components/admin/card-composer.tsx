@@ -10,7 +10,7 @@ import { Field } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import { CopyLinkButton } from "@/components/admin/copy-link-button";
-import { ThankYouCard } from "@/components/thank-you-card";
+import { ThankYouCard, buildSalutation } from "@/components/thank-you-card";
 import {
   archiveCard,
   deleteCard,
@@ -18,6 +18,7 @@ import {
   saveCardMessage,
   unpublishCard,
 } from "@/lib/actions/cards";
+import { formatDate } from "@/lib/utils";
 import type { CardStatus } from "@/lib/database.types";
 
 const statusVariant: Record<CardStatus, BadgeVariant> = {
@@ -37,6 +38,8 @@ interface ComposerCard {
   status: CardStatus;
   greeting_message: string;
   publicUrl: string;
+  openCount: number;
+  firstOpenedAt: string | null;
 }
 
 interface PreviewSettings {
@@ -51,12 +54,15 @@ interface PreviewSettings {
 export function CardComposer({
   card,
   guestName,
+  companions,
   preview,
 }: {
   card: ComposerCard;
   guestName: string;
+  companions: string[];
   preview: PreviewSettings;
 }) {
+  const salutation = buildSalutation(guestName, companions);
   const [message, setMessage] = useState(card.greeting_message);
   const [banner, setBanner] = useState<{ variant: AlertVariant; text: string } | null>(null);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
@@ -152,6 +158,15 @@ export function CardComposer({
               </>
             ) : null}
           </div>
+          {card.status === "published" ? (
+            <p className="mt-2 text-[14px] text-muted">
+              {card.openCount > 0
+                ? `Opened ${card.openCount} ${card.openCount === 1 ? "time" : "times"}${
+                    card.firstOpenedAt ? ` · first on ${formatDate(card.firstOpenedAt)}` : ""
+                  }`
+                : "Not opened yet"}
+            </p>
+          ) : null}
         </div>
       </div>
 
@@ -162,7 +177,7 @@ export function CardComposer({
           <Field
             label="Personal Greeting Message"
             htmlFor="greeting"
-            helper={`The "Dear ${guestName.split(" ")[0]}," salutation is added automatically — just write the message itself.`}
+            helper={`The "${salutation}" salutation is added automatically — just write the message itself.`}
           >
             <Textarea
               id="greeting"
@@ -208,6 +223,7 @@ export function CardComposer({
             <ThankYouCard
               coupleNames={preview.coupleNames}
               guestName={guestName}
+              companions={companions}
               message={message || "Your personal greeting will appear here…"}
               weddingDate={preview.weddingDate}
               venue={preview.venue}

@@ -14,7 +14,7 @@ export default async function CardDetailPage({
   const [{ data: card }, settings, { data: firstPhoto }] = await Promise.all([
     supabase
       .from("thank_you_cards")
-      .select("*, guests(full_name)")
+      .select("*, guests(full_name, companions)")
       .eq("id", id)
       .maybeSingle(),
     getSettings(),
@@ -27,8 +27,7 @@ export default async function CardDetailPage({
   ]);
   if (!card) notFound();
 
-  const guestName =
-    (card.guests as { full_name: string } | null)?.full_name ?? "Unknown guest";
+  const guest = card.guests as { full_name: string; companions: string[] } | null;
 
   return (
     <CardComposer
@@ -37,8 +36,11 @@ export default async function CardDetailPage({
         status: card.status,
         greeting_message: card.greeting_message,
         publicUrl: cardUrl(card.slug),
+        openCount: card.open_count,
+        firstOpenedAt: card.first_opened_at,
       }}
-      guestName={guestName}
+      guestName={guest?.full_name ?? "Unknown guest"}
+      companions={guest?.companions ?? []}
       preview={{
         coupleNames: settings.couple_names,
         weddingDate: settings.wedding_date,

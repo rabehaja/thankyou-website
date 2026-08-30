@@ -5,7 +5,6 @@ import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input, Textarea } from "@/components/ui/input";
-import { Toggle } from "@/components/ui/toggle";
 import { updateSettings, type SettingsFormState } from "@/lib/actions/settings";
 import type { Settings } from "@/lib/database.types";
 
@@ -77,12 +76,6 @@ export function SettingsForm({ settings }: { settings: Settings }) {
           placeholder="https://drive.google.com/…"
         />
       </Field>
-
-      <Toggle
-        name="rsvp_active"
-        defaultChecked={settings.rsvp_active}
-        label="RSVP active"
-      />
 
       <div>
         <Button type="submit" disabled={pending}>

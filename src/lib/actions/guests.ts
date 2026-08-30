@@ -14,8 +14,8 @@ const guestSchema = z.object({
     .email("Please enter a valid email address.")
     .or(z.literal(""))
     .transform((value) => value || null),
+  companions: z.array(z.string().trim().min(1)).max(10),
   tags: z.array(z.string().trim().min(1)).max(12),
-  rsvp_received: z.boolean(),
   status: z.enum(["active", "pending", "archived"]),
 });
 
@@ -23,19 +23,21 @@ export interface GuestFormState {
   error: string | null;
 }
 
-function parseGuestForm(formData: FormData) {
-  let tags: string[] = [];
+function parseJsonList(formData: FormData, field: string): string[] {
   try {
-    const raw = JSON.parse(String(formData.get("tags") ?? "[]"));
-    if (Array.isArray(raw)) tags = raw.map(String);
+    const raw = JSON.parse(String(formData.get(field) ?? "[]"));
+    return Array.isArray(raw) ? raw.map(String) : [];
   } catch {
-    tags = [];
+    return [];
   }
+}
+
+function parseGuestForm(formData: FormData) {
   return guestSchema.safeParse({
     full_name: formData.get("full_name") ?? "",
     email: formData.get("email") ?? "",
-    tags,
-    rsvp_received: formData.get("rsvp_received") === "on",
+    companions: parseJsonList(formData, "companions"),
+    tags: parseJsonList(formData, "tags"),
     status: formData.get("status") ?? "active",
   });
 }

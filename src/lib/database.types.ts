@@ -18,6 +18,7 @@ export type Guest = {
   full_name: string;
   email: string | null;
   table_assignment: string | null;
+  companions: string[];
   tags: string[];
   rsvp_received: boolean;
   status: GuestStatus;
@@ -32,6 +33,9 @@ export type ThankYouCard = {
   greeting_message: string;
   status: CardStatus;
   published_at: string | null;
+  open_count: number;
+  first_opened_at: string | null;
+  last_opened_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -46,6 +50,7 @@ export type GalleryPhoto = {
 export type LiveCard = {
   greeting_message: string;
   guest_name: string;
+  companions: string[];
 }
 
 export type Database = {
@@ -89,6 +94,10 @@ export type Database = {
       get_live_card: {
         Args: { card_slug: string };
         Returns: LiveCard[];
+      };
+      record_card_open: {
+        Args: { card_slug: string };
+        Returns: undefined;
       };
     };
     Enums: {

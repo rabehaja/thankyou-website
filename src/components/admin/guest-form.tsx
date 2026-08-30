@@ -6,11 +6,74 @@ import { Button } from "@/components/ui/button";
 import { Tag } from "@/components/ui/badge";
 import { Field } from "@/components/ui/field";
 import { Input, Select } from "@/components/ui/input";
-import { Toggle } from "@/components/ui/toggle";
 import type { Guest } from "@/lib/database.types";
 import type { GuestFormState } from "@/lib/actions/guests";
 
 const initialState: GuestFormState = { error: null };
+
+/** Chip editor posting its values as a JSON-encoded hidden input. */
+function ChipListField({
+  label,
+  name,
+  helper,
+  placeholder,
+  values,
+  onChange,
+  maxItems,
+}: {
+  label: string;
+  name: string;
+  helper: string;
+  placeholder: string;
+  values: string[];
+  onChange: (values: string[]) => void;
+  maxItems: number;
+}) {
+  const [draft, setDraft] = useState("");
+  const inputId = `${name}-draft`;
+
+  const add = () => {
+    const value = draft.trim();
+    if (!value || values.includes(value) || values.length >= maxItems) return;
+    onChange([...values, value]);
+    setDraft("");
+  };
+
+  return (
+    <Field label={label} htmlFor={inputId} helper={helper}>
+      <input type="hidden" name={name} value={JSON.stringify(values)} />
+      <div className="flex gap-2">
+        <Input
+          id={inputId}
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              add();
+            }
+          }}
+          placeholder={placeholder}
+        />
+        <Button variant="secondary" size="md" onClick={add}>
+          Add
+        </Button>
+      </div>
+      {values.length > 0 ? (
+        <div className="mt-1 flex flex-wrap gap-2">
+          {values.map((value) => (
+            <Tag
+              key={value}
+              onRemove={() => onChange(values.filter((v) => v !== value))}
+            >
+              {value}
+            </Tag>
+          ))}
+        </div>
+      ) : null}
+    </Field>
+  );
+}
 
 export function GuestForm({
   guest,
@@ -23,14 +86,7 @@ export function GuestForm({
 }) {
   const [state, formAction, pending] = useActionState(action, initialState);
   const [tags, setTags] = useState<string[]>(guest?.tags ?? []);
-  const [tagDraft, setTagDraft] = useState("");
-
-  const addTag = () => {
-    const value = tagDraft.trim();
-    if (!value || tags.includes(value) || tags.length >= 12) return;
-    setTags((current) => [...current, value]);
-    setTagDraft("");
-  };
+  const [companions, setCompanions] = useState<string[]>(guest?.companions ?? []);
 
   return (
     <form action={formAction} className="flex max-w-xl flex-col gap-5">
@@ -60,42 +116,25 @@ export function GuestForm({
         />
       </Field>
 
-      <Field
+      <ChipListField
+        label="Additional Guests"
+        name="companions"
+        helper="Partners, kids, or +1s — they'll be greeted in the letter too."
+        placeholder="Add a companion's name..."
+        values={companions}
+        onChange={setCompanions}
+        maxItems={10}
+      />
+
+      <ChipListField
         label="Tags"
-        htmlFor="tag-draft"
+        name="tags"
         helper="Group guests — e.g. Bridal Shower, Groom's Family."
-      >
-        <input type="hidden" name="tags" value={JSON.stringify(tags)} />
-        <div className="flex gap-2">
-          <Input
-            id="tag-draft"
-            value={tagDraft}
-            onChange={(event) => setTagDraft(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                event.preventDefault();
-                addTag();
-              }
-            }}
-            placeholder="Add a tag..."
-          />
-          <Button variant="secondary" size="md" onClick={addTag}>
-            Add
-          </Button>
-        </div>
-        {tags.length > 0 ? (
-          <div className="mt-1 flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Tag
-                key={tag}
-                onRemove={() => setTags((current) => current.filter((t) => t !== tag))}
-              >
-                {tag}
-              </Tag>
-            ))}
-          </div>
-        ) : null}
-      </Field>
+        placeholder="Add a tag..."
+        values={tags}
+        onChange={setTags}
+        maxItems={12}
+      />
 
       <Field label="Status" htmlFor="status">
         <Select id="status" name="status" defaultValue={guest?.status ?? "active"}>
@@ -104,12 +143,6 @@ export function GuestForm({
           <option value="archived">Archived</option>
         </Select>
       </Field>
-
-      <Toggle
-        name="rsvp_received"
-        defaultChecked={guest?.rsvp_received ?? false}
-        label="RSVP received"
-      />
 
       <div className="mt-2 flex gap-3">
         <Button type="submit" disabled={pending}>

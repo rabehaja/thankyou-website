@@ -10,20 +10,17 @@ export const metadata: Metadata = { title: "Dashboard" };
 
 interface DashboardStats {
   totalGuests: number;
-  rsvpReceived: number;
   liveCards: number;
   draftCards: number;
+  openedCards: number;
+  totalOpens: number;
 }
 
 async function getStats(): Promise<DashboardStats | null> {
   try {
     const supabase = createAdminClient();
-    const [guests, rsvps, live, drafts] = await Promise.all([
+    const [guests, live, drafts, opens] = await Promise.all([
       supabase.from("guests").select("id", { count: "exact", head: true }),
-      supabase
-        .from("guests")
-        .select("id", { count: "exact", head: true })
-        .eq("rsvp_received", true),
       supabase
         .from("thank_you_cards")
         .select("id", { count: "exact", head: true })
@@ -32,12 +29,17 @@ async function getStats(): Promise<DashboardStats | null> {
         .from("thank_you_cards")
         .select("id", { count: "exact", head: true })
         .eq("status", "draft"),
+      supabase
+        .from("thank_you_cards")
+        .select("open_count")
+        .gt("open_count", 0),
     ]);
     return {
       totalGuests: guests.count ?? 0,
-      rsvpReceived: rsvps.count ?? 0,
       liveCards: live.count ?? 0,
       draftCards: drafts.count ?? 0,
+      openedCards: opens.data?.length ?? 0,
+      totalOpens: (opens.data ?? []).reduce((sum, row) => sum + row.open_count, 0),
     };
   } catch {
     return null;
@@ -66,16 +68,16 @@ export default async function DashboardPage() {
         <>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
             <StatCard label="Total Guests" value={stats.totalGuests} />
+            <StatCard label="Thank Yous Live" value={stats.liveCards} />
             <StatCard
-              label="Total RSVP Received"
-              value={stats.rsvpReceived}
+              label="Letters Opened"
+              value={stats.openedCards}
               detail={
-                stats.totalGuests > 0
-                  ? `${Math.round((stats.rsvpReceived / stats.totalGuests) * 100)}% of Guests`
+                stats.openedCards > 0
+                  ? `${stats.totalOpens} total opens`
                   : undefined
               }
             />
-            <StatCard label="Thank Yous Live" value={stats.liveCards} />
             <StatCard label="Drafts Pending" value={stats.draftCards} />
           </div>
           {stats.draftCards > 0 ? (
