@@ -34,7 +34,7 @@ export default async function SettingsPage() {
   return (
     <div className="flex max-w-3xl flex-col gap-8">
       <div>
-        <h1 className="text-h1 text-[36px] text-ink">Settings</h1>
+        <h1 className="text-h1 text-[56px] text-ink">Settings</h1>
         <p className="mt-1 text-[15px] text-muted">
           Everything shown on the public thank-you pages lives here.
         </p>

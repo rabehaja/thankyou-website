@@ -39,7 +39,7 @@ export interface FormCardProps {
 export function FormCard({ heading, description, children, className }: FormCardProps) {
   return (
     <Card className={cn("p-8", className)}>
-      <h2 className="text-h1 text-[32px] text-terracotta">{heading}</h2>
+      <h2 className="text-h1 text-[48px] text-terracotta">{heading}</h2>
       {description ? <p className="mt-2 text-[15px] text-muted">{description}</p> : null}
       <div className="mt-6">{children}</div>
     </Card>

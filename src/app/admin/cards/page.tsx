@@ -73,7 +73,7 @@ export default async function CardsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-h1 text-[36px] text-ink">Thank You Cards</h1>
+        <h1 className="text-h1 text-[56px] text-ink">Thank You Cards</h1>
         <p className="mt-1 text-[15px] text-muted">
           Write a personal greeting for each guest and publish their card page.
         </p>
