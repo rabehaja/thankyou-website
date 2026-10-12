@@ -48,8 +48,8 @@ couple. Built with Next.js (App Router, TypeScript, Tailwind v4) and Supabase
 The public pages (`/` and `/t/<slug>`) wear the design of the wedding invitation site: a sealed
 envelope as the landing screen (the pre-rendered clip under `public/intro/`, or the code-animated
 envelope when the clip cannot play or the viewer prefers reduced motion), the wax seal as the only
-way in, confetti, then the letter in navy ink on blush paper (Allura + Josefin Sans, bundled
-through `@fontsource`). The couple's names, monogram and date on the envelope and the cover come
+way in, confetti, then the letter in navy ink on blush paper (Allura script, bundled through `@fontsource`, with
+Montserrat for the running text). The couple's names, monogram and date on the envelope and the cover come
 from the site settings (`src/domain/couple.ts`), so the backoffice stays in charge of the content.
 
 - `src/components/encre/opening-experience.tsx` orchestrates closed → opening → open and wraps the

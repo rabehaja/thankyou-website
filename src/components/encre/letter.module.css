@@ -31,10 +31,9 @@
 }
 
 .eyebrow {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
-  letter-spacing: 0.36em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .script {
@@ -51,8 +50,7 @@
 .amp {
   font-size: 12px;
   font-weight: 300;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
   padding: 8px 0;
 }
 
@@ -71,17 +69,15 @@
 }
 
 .date {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
 }
 
 .venue {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 300;
   letter-spacing: 0.3em;
-  text-transform: uppercase;
 }
 
 /* The letter: a paper card on the blush, like the inside of the invitation. */
@@ -102,7 +98,7 @@
 }
 
 .message {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 300;
   line-height: 1.9;
   white-space: pre-line;
@@ -135,9 +131,8 @@
 }
 
 .gallery {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.3em;
-  text-transform: uppercase;
   text-decoration: none;
   border: 1px solid var(--ink);
   padding: 12px 22px;
