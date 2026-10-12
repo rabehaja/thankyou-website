@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cards:draft": "node --env-file=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/draft-thank-you-cards.mts"
   },
   "dependencies": {
     "@fontsource/allura": "^5.3.0",

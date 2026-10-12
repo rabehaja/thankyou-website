@@ -59,6 +59,17 @@ from the site settings (`src/domain/couple.ts`), so the backoffice stays in char
 - `src/app/encre.css` holds the design tokens and fonts; the backoffice keeps the Warm Botanical
   theme in `globals.css`.
 
+## Drafting the thank-you cards
+
+`npm run cards:draft` composes a personal message for every active guest who has no card yet
+and prints them all (dry run); `npm run cards:draft -- --apply` inserts them as drafts, to review
+and publish from `/admin/cards`. The wording (`src/domain/thank-you-message.ts`) varies per guest,
+follows the size of the party (one person, a couple, a family or group) and how they took part,
+read from the guest's tags: "weekend" or "stayed" (default), "day guest", "evening", "travelled"
+or "abroad", "remote"; a "no gift" tag drops the gift sentence and "helped" (or "witness",
+"bridesmaid", "best man") adds a thank-you for their help. The script runs with your service-role
+key from `.env.local` and never touches guests who already have a card.
+
 ## Architecture notes
 
 - **Auth**: single shared admin account. The password lives in `.env.local`;
