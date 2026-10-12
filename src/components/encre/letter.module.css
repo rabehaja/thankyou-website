@@ -1,0 +1,196 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(40px, 8vh, 96px) 0 0;
+  gap: clamp(48px, 8vh, 96px);
+  text-align: center;
+  background: var(--blush);
+  color: var(--ink);
+  font-family: var(--encre-font-sans);
+}
+
+.cover {
+  position: relative;
+  z-index: 3;
+  gap: 8px;
+}
+
+.cover > *:first-child {
+  margin-bottom: 10px;
+}
+
+.section {
+  width: calc(100% - 32px);
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.script {
+  font-family: var(--encre-font-script);
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.names {
+  font-size: clamp(44px, 10vw, 64px);
+  line-height: 1;
+}
+
+.amp {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  padding: 8px 0;
+}
+
+.dateRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dateRow::before,
+.dateRow::after {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: var(--ink);
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.venue {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* The letter: a paper card on the blush, like the inside of the invitation. */
+.letter {
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid rgba(31, 42, 68, 0.14);
+  padding: clamp(36px, 6vw, 56px) clamp(22px, 6vw, 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  box-shadow: 0 18px 50px rgba(31, 42, 68, 0.08);
+}
+
+.salutation {
+  font-size: clamp(34px, 7vw, 44px);
+}
+
+.message {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.9;
+  white-space: pre-line;
+  text-align: center;
+  max-width: 440px;
+}
+
+.rule {
+  width: 36px;
+  height: 1px;
+  background: var(--ink);
+}
+
+.photoMat {
+  width: 100%;
+  max-width: 520px;
+  background: var(--paper);
+  padding: 10px;
+  border: 1px solid rgba(31, 42, 68, 0.14);
+  box-shadow: 0 18px 50px rgba(31, 42, 68, 0.08);
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.gallery {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  padding: 12px 22px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.gallery:hover {
+  background: var(--ink);
+  color: var(--blush);
+}
+
+.footer {
+  width: 100%;
+  margin-top: clamp(24px, 6vh, 64px);
+  background: var(--ink);
+  color: var(--blush);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 56px 16px 64px;
+}
+
+.footer a {
+  color: var(--blush);
+}
+
+.footerDate {
+  font-size: 13px;
+  letter-spacing: 0.4em;
+}
+
+.footerScript {
+  font-family: var(--encre-font-script);
+  font-size: 40px;
+  line-height: 1;
+}
+
+.footerNames {
+  font-family: var(--encre-font-script);
+  font-size: 28px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+@media (max-width: 430px) {
+  .dateRow::before,
+  .dateRow::after {
+    width: 18px;
+  }
+
+  .date {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+  }
+}

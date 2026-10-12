@@ -1,0 +1,168 @@
+.scene {
+  position: fixed;
+  inset: 0;
+  background: var(--blush);
+  overflow: hidden;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: clamp(32px, 9vh, 96px);
+  gap: 14px;
+  background: linear-gradient(180deg, transparent 60%, rgba(31, 42, 68, 0.18));
+}
+
+.open {
+  border: 1px solid rgba(246, 235, 231, 0.85);
+  background: rgba(31, 42, 68, 0.55);
+  color: var(--blush);
+  backdrop-filter: blur(6px);
+  border-radius: 999px;
+  padding: 16px 28px;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.open:hover {
+  background: rgba(31, 42, 68, 0.75);
+}
+
+.hint {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blush);
+  opacity: 0.85;
+}
+
+.scene {
+  z-index: 1;
+}
+
+.cardOverlay {
+  position: absolute;
+  pointer-events: none;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--ink);
+  text-align: center;
+  padding-top: 9cqw;
+  gap: 1.6cqw;
+  will-change: left, top, opacity;
+}
+
+.cardMonogram {
+  margin-bottom: 2cqw;
+}
+
+.cardName {
+  font-family: var(--encre-font-script);
+  font-size: 13cqw;
+  line-height: 1;
+}
+
+.cardEt {
+  font-size: 2.6cqw;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-weight: 300;
+  padding: 1cqw 0;
+}
+
+.cardDate {
+  margin-top: 3cqw;
+  font-size: 2.6cqw;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.posterLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.sealHotspot {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sealHotspot:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 6px;
+}
+
+.sealRing,
+.sealRingSlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(246, 235, 231, 0.9);
+  box-shadow: 0 0 0 1px rgba(31, 42, 68, 0.15);
+  animation: ripple 2.8s ease-out infinite;
+  pointer-events: none;
+}
+
+.sealRingSlow {
+  animation-delay: 1.4s;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.72);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(24px, 6vh, 56px);
+  text-align: center;
+  color: var(--ink);
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sealRing,
+  .sealRingSlow {
+    animation: none;
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,50 @@
+/*
+ * Encre & Poudre: the design system of the wedding invitation (navy ink on blush paper,
+ * Allura script with Josefin Sans), used by the public thank-you pages and their intro.
+ * Variables are prefixed or distinct from the Tailwind theme so the backoffice is untouched.
+ */
+@import "@fontsource/allura/400.css";
+@import "@fontsource/josefin-sans/300.css";
+@import "@fontsource/josefin-sans/400.css";
+@import "@fontsource/josefin-sans/600.css";
+@import "@fontsource/josefin-sans/300-italic.css";
+
+:root {
+  --ink: #1f2a44;
+  --ink-soft: #4a5675;
+  --blush: #f6ebe7;
+  --blush-deep: #eddcd5;
+  --paper: #fbf5f2;
+  --wax: #7a2e3b;
+  --wax-dark: #55202a;
+  --wax-light: #a24a58;
+  --encre-font-script: "Allura", cursive;
+  --encre-font-sans: "Josefin Sans", system-ui, sans-serif;
+}
+
+/* Applied to the public pages' root so the whole viewport is blush, including the intro. */
+.encre {
+  background: var(--blush);
+  color: var(--ink);
+  font-family: var(--encre-font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.encre button {
+  font: inherit;
+  color: inherit;
+}
+
+.encre a {
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .encre *,
+  .encre *::before,
+  .encre *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

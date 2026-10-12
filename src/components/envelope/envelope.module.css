@@ -1,0 +1,244 @@
+.scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(120% 90% at 50% 110%, #efdcd6 0%, transparent 60%),
+    var(--blush);
+}
+
+.scene::after {
+  /* soft vignette so the envelope reads as lit from above */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(80% 70% at 50% 45%, transparent 55%, rgba(31, 42, 68, 0.12) 100%);
+}
+
+.camera {
+  position: relative;
+  perspective: 1600px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.envelope {
+  position: relative;
+  width: min(92vw, 640px);
+  aspect-ratio: 3 / 2;
+  transform-style: preserve-3d;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0.16 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+}
+
+.pocket {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  border-radius: 6px;
+  box-shadow:
+    0 40px 80px -36px rgba(31, 42, 68, 0.5),
+    0 2px 0 rgba(255, 255, 255, 0.6) inset;
+  overflow: hidden;
+}
+
+.pocket::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(31, 42, 68, 0.2), transparent 30%);
+}
+
+.card {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 7%;
+  bottom: 6%;
+  background: var(--blush);
+  border-radius: 4px;
+  box-shadow: 0 10px 30px -14px rgba(31, 42, 68, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.2cqw;
+  color: var(--ink);
+  text-align: center;
+  container-type: inline-size;
+  will-change: transform;
+}
+
+.cardEyebrow {
+  font-size: 2cqw;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.cardName {
+  font-family: var(--encre-font-script);
+  font-size: 10cqw;
+  line-height: 1;
+}
+
+.cardEt {
+  font-size: 2.2cqw;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.cardDate {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+  font-size: 2.3cqw;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.cardDate::before,
+.cardDate::after {
+  content: "";
+  width: 7cqw;
+  height: 1px;
+  background: var(--ink);
+}
+
+.sidesLeft,
+.sidesRight,
+.bottom {
+  position: absolute;
+  inset: 0;
+  background: var(--blush-deep);
+}
+
+.sidesLeft {
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+}
+
+.sidesRight {
+  clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+}
+
+.bottom {
+  clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+  background: #f1e3de;
+}
+
+.flapWrap {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.flapFace,
+.flapBack {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 56%);
+  backface-visibility: hidden;
+}
+
+.flapFace {
+  background: linear-gradient(180deg, #f3e6e1, var(--blush-deep));
+}
+
+.flapBack {
+  background: #e9d6cf;
+  transform: rotateX(180deg);
+}
+
+.flapLine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+
+.sealAnchor {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  width: clamp(80px, 17vw, 112px);
+  height: clamp(80px, 17vw, 112px);
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.seal {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  outline-offset: 6px;
+}
+
+.seal:focus-visible {
+  outline: 2px solid var(--ink);
+}
+
+.sealSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 5px 7px rgba(31, 42, 68, 0.4));
+}
+
+.sealMonogram {
+  position: relative;
+  color: rgba(255, 235, 230, 0.88);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18),
+    0 -1px 1px rgba(0, 0, 0, 0.4);
+  padding-top: 4px;
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+  mix-blend-mode: screen;
+}
+
+.hint {
+  position: absolute;
+  bottom: clamp(20px, 5vh, 48px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+

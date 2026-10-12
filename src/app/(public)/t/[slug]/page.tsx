@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { OpeningExperience } from "@/components/encre/opening-experience";
 import { OpenTracker } from "@/components/open-tracker";
 import { ThankYouCard } from "@/components/thank-you-card";
+import { coupleFromSettings } from "@/domain/couple";
 import { createPublicClient } from "@/lib/supabase/server";
 import { getSettings, publicPhotoUrl } from "@/lib/data";
 import type { LiveCard } from "@/lib/database.types";
@@ -49,17 +51,19 @@ export default async function GuestCardPage({
   return (
     <main className="w-full">
       <OpenTracker slug={slug} />
-      <ThankYouCard
-        coupleNames={settings.couple_names}
-        guestName={card.guest_name}
-        companions={card.companions}
-        message={card.greeting_message}
-        weddingDate={settings.wedding_date}
-        venue={settings.venue}
-        photoUrl={settings.couple_photo_url}
-        featuredPhotoUrl={featuredPhotoUrl}
-        galleryHref={settings.gallery_url ?? "/gallery"}
-      />
+      <OpeningExperience couple={coupleFromSettings(settings)}>
+        <ThankYouCard
+          coupleNames={settings.couple_names}
+          guestName={card.guest_name}
+          companions={card.companions}
+          message={card.greeting_message}
+          weddingDate={settings.wedding_date}
+          venue={settings.venue}
+          photoUrl={settings.couple_photo_url}
+          featuredPhotoUrl={featuredPhotoUrl}
+          galleryHref={settings.gallery_url ?? "/gallery"}
+        />
+      </OpeningExperience>
     </main>
   );
 }

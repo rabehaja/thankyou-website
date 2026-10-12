@@ -43,6 +43,22 @@ couple. Built with Next.js (App Router, TypeScript, Tailwind v4) and Supabase
 
    Sign in at `/login` with `ADMIN_PASSWORD`.
 
+## Public design: Encre & Poudre
+
+The public pages (`/` and `/t/<slug>`) wear the design of the wedding invitation site: a sealed
+envelope as the landing screen (the pre-rendered clip under `public/intro/`, or the code-animated
+envelope when the clip cannot play or the viewer prefers reduced motion), the wax seal as the only
+way in, confetti, then the letter in navy ink on blush paper (Allura + Josefin Sans, bundled
+through `@fontsource`). The couple's names, monogram and date on the envelope and the cover come
+from the site settings (`src/domain/couple.ts`), so the backoffice stays in charge of the content.
+
+- `src/components/encre/opening-experience.tsx` orchestrates closed → opening → open and wraps the
+  server-rendered page content, which only mounts once the envelope is open.
+- `src/components/thank-you-card.tsx` is the opened page, shared with the backoffice preview
+  (the preview shows the page without the envelope).
+- `src/app/encre.css` holds the design tokens and fonts; the backoffice keeps the Warm Botanical
+  theme in `globals.css`.
+
 ## Architecture notes
 
 - **Auth**: single shared admin account. The password lives in `.env.local`;
