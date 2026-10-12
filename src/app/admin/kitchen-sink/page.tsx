@@ -34,11 +34,11 @@ export default function KitchenSinkPage() {
     <div className="flex max-w-4xl flex-col gap-12 pb-16">
       <Section title="Buttons">
         <div className="flex flex-wrap items-center gap-3">
-          <Button>Send Thank You</Button>
+          <Button>Copy the shareable link</Button>
           <Button variant="secondary">Edit Guest List</Button>
           <Button variant="ghost">Cancel Changes</Button>
           <Button variant="destructive">Delete Design</Button>
-          <Button disabled>Send Thank You</Button>
+          <Button disabled>Copy the shareable link</Button>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <Button size="sm">Small Action</Button>

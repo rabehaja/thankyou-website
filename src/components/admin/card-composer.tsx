@@ -18,6 +18,7 @@ import {
   saveCardMessage,
   unpublishCard,
 } from "@/lib/actions/cards";
+import { copyToClipboard } from "@/lib/clipboard";
 import { formatDate } from "@/lib/utils";
 import type { CardStatus } from "@/lib/database.types";
 
@@ -84,24 +85,42 @@ export function CardComposer({
       }
     });
 
-  const handlePublish = () =>
+  /**
+   * One click does the whole hand-over: the greeting is saved, the page goes live, and the
+   * guest's link is already in the clipboard, ready to paste into a message.
+   * The clipboard write starts first, inside the click gesture, because Safari rejects it
+   * after an `await`; the link is known in advance (the slug never changes).
+   */
+  const handleCopyShareableLink = () => {
+    const copying = copyToClipboard(card.publicUrl);
     run(async () => {
-      const saved = await saveCardMessage(card.id, message);
-      if (!saved.ok) {
-        setBanner({ variant: "error", text: saved.error ?? "Could not save." });
-        return;
-      }
-      const result = await publishCard(card.id);
-      if (result.ok) {
-        setBanner({
-          variant: "success",
-          text: "Thank you web page created! The link is now live.",
-        });
+      if (card.status !== "published") {
+        const saved = await saveCardMessage(card.id, message);
+        if (!saved.ok) {
+          setBanner({ variant: "error", text: saved.error ?? "Could not save." });
+          return;
+        }
+        const published = await publishCard(card.id);
+        if (!published.ok) {
+          setBanner({ variant: "error", text: published.error ?? "Could not publish." });
+          return;
+        }
         router.refresh();
-      } else {
-        setBanner({ variant: "error", text: result.error ?? "Could not publish." });
       }
+      const copied = await copying;
+      setBanner(
+        copied
+          ? {
+              variant: "success",
+              text: "The page is live and the shareable link is in your clipboard. Paste it to the guest.",
+            }
+          : {
+              variant: "warning",
+              text: `The page is live, but the link could not be copied automatically. Copy it here: ${card.publicUrl}`,
+            },
+      );
     });
+  };
 
   const handleUnpublish = () =>
     run(async () => {
@@ -146,7 +165,7 @@ export function CardComposer({
             <Badge variant={statusVariant[card.status]}>{statusLabel[card.status]}</Badge>
             {card.status === "published" ? (
               <>
-                <CopyLinkButton url={card.publicUrl} />
+                <CopyLinkButton url={card.publicUrl} label="Copy the shareable link" />
                 <a
                   href={card.publicUrl}
                   target="_blank"
@@ -188,18 +207,17 @@ export function CardComposer({
             />
           </Field>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button onClick={handleSave} disabled={pending}>
+            <Button variant="secondary" onClick={handleSave} disabled={pending}>
               {pending ? "Working…" : "Save Design"}
             </Button>
-            {card.status !== "published" ? (
-              <Button variant="secondary" onClick={handlePublish} disabled={pending}>
-                Send Thank You
-              </Button>
-            ) : (
+            <Button onClick={handleCopyShareableLink} disabled={pending}>
+              Copy the shareable link
+            </Button>
+            {card.status === "published" ? (
               <Button variant="secondary" onClick={handleUnpublish} disabled={pending}>
                 Take Offline
               </Button>
-            )}
+            ) : null}
             {card.status !== "archived" ? (
               <Button variant="ghost" onClick={handleArchive} disabled={pending}>
                 Archive
@@ -213,6 +231,11 @@ export function CardComposer({
               Delete Design
             </Button>
           </div>
+          <p className="mt-3 text-[13px] text-muted">
+            {card.status === "published"
+              ? "Copies this guest's link so you can paste it into a message."
+              : "Saves the greeting, puts the page online and copies this guest's link so you can paste it into a message."}
+          </p>
         </div>
 
         <div className="flex flex-col items-center gap-3">
