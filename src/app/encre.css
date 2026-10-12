@@ -20,7 +20,8 @@
 
 /* Applied to the public pages' root so the whole viewport is blush, including the intro. */
 .encre {
-  background: var(--blush);
+  /* Margins beside the sheet on wide screens; the sheet itself is the lighter blush. */
+  background: var(--blush-deep);
   color: var(--ink);
   font-family: var(--encre-font-sans);
   -webkit-font-smoothing: antialiased;

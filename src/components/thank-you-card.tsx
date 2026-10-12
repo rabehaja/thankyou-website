@@ -112,14 +112,14 @@ function Letter({
 
       {/* The couple's photo in a paper mat */}
       {photoUrl ? (
-        <section className={styles.section} aria-label="Photo">
+        <section className={cn(styles.section, styles.photoSection)} aria-label="Photo">
           <Reveal>
             <div className={styles.photoMat}>
               <Image
                 src={photoUrl}
                 alt={coupleNames}
-                width={1040}
-                height={780}
+                width={1200}
+                height={800}
                 priority
                 className={styles.photo}
               />

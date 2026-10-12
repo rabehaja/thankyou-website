@@ -112,11 +112,16 @@
   background: var(--ink);
 }
 
+/* The photo gets a wider column than the text so it has room to breathe. */
+.photoSection {
+  max-width: 820px;
+}
+
 .photoMat {
   width: 100%;
-  max-width: 520px;
+  max-width: 820px;
   background: var(--paper);
-  padding: 10px;
+  padding: 14px;
   border: 1px solid rgba(31, 42, 68, 0.14);
   box-shadow: 0 18px 50px rgba(31, 42, 68, 0.08);
 }
@@ -125,7 +130,7 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center 30%;
 }
@@ -176,6 +181,21 @@
   font-size: 28px;
   line-height: 1;
   opacity: 0.9;
+}
+
+/*
+ * On wide screens the page reads as a single sheet laid on the desk: a centred column with a
+ * soft shadow on both sides, the deeper blush showing in the margins.
+ */
+@media (min-width: 960px) {
+  .page {
+    width: min(100%, 960px);
+    margin: 0 auto;
+    box-shadow:
+      0 0 0 1px rgba(31, 42, 68, 0.06),
+      0 24px 80px rgba(31, 42, 68, 0.14),
+      0 0 120px rgba(31, 42, 68, 0.08);
+  }
 }
 
 @media (max-width: 430px) {
