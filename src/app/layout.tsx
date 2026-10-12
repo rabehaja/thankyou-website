@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Montserrat, Playfair_Display, Tenor_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import "./encre.css";
@@ -15,11 +16,21 @@ const london = localFont({
   display: "swap",
 });
 
-const montserrat = localFont({ src: "../fonts/london.woff2", variable: "--font-montserrat", display: "swap" });
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+});
 
-const playfair = localFont({ src: "../fonts/london.woff2", variable: "--font-playfair", display: "swap" });
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+});
 
-const tenorSans = localFont({ src: "../fonts/london.woff2", variable: "--font-tenorsans", display: "swap" });
+const tenorSans = Tenor_Sans({
+  variable: "--font-tenorsans",
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: {
